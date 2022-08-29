@@ -24,7 +24,7 @@ class BaseModel:
     def __str__(self):
         """Prints string representation of instance"""
 
-        string = "BaseModel ({}) {}".format(self.id, self.__dict__)
+        string = "[BaseModel] ({}) {}".format(self.id, self.__dict__)
         return string
 
     def save(self):
@@ -39,7 +39,7 @@ class BaseModel:
 
         dictionary = self.__dict__
         dictionary["__class__"] = self.__class__.__name__
-        dictionary["created_at"] = (self.created_at).isoformat()
-        dictionary["updated_at"] = (self.updated_at).isoformat()
+        dictionary["created_at"] = self.created_at.isoformat()
+        dictionary["updated_at"] = self.updated_at.isoformat()
 
         return dictionary

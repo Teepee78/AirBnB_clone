@@ -16,10 +16,22 @@ class BaseModel:
         updated_at: datetime - datetime when instance was last updated
     """
 
-    def __init__(self):
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                if key == "created_at" or key == "updated_at":
+                    date = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                    setattr(self, key, date)
+                else:
+                    setattr(self, key, value)
+        elif len(args) != 0:
+            raise TypeError("Too many arguments")
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """Prints string representation of instance"""

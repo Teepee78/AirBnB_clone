@@ -3,6 +3,7 @@
 import cmd
 import json
 from models.base_model import BaseModel
+from models import storage
 
 
 # List of classes
@@ -47,10 +48,8 @@ class HBNBCommand(cmd.Cmd):
             return
         instance = BaseModel()
         # save to json file
-        with open(jsonpath, mode="r+", encoding="utf-8") as f:
-            if len(f.read()) != 0:
-                f.write("\n")
-            f.write(json.dumps(instance.to_dict()))
+        storage.new(instance)
+        storage.save()
         print(instance.id)
 
     def do_show(self, argv):

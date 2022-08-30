@@ -4,6 +4,7 @@ This module defines FileStorage Class
 """
 import json
 from os.path import exists
+from datetime import datetime
 
 
 class FileStorage:
@@ -34,11 +35,22 @@ class FileStorage:
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
 
+        # copy dictionary
+        copiedDict = dict(FileStorage.__objects)
+        # convert datetime to isoformat
+        for key, instance in copiedDict.items():
+            if type(instance["created_at"]) is not str:
+                date = instance["created_at"].isoformat()
+                instance["created_at"] = date
+            if type(instance["updated_at"]) is not str:
+                date = instance["updated_at"].isoformat()
+                instance["updated_at"] = date
+
         with open(FileStorage.__file_path, 'w', encoding="utf-8") as wFile:
             if len(FileStorage.__objects) == 0:
                 wFile.write("{}")
             else:
-                wFile.write(json.dumps(FileStorage.__objects))
+                wFile.write(json.dumps(copiedDict))
 
     def reload(self):
         """deserializes the JSON file to __objects"""
@@ -50,3 +62,12 @@ class FileStorage:
                     FileStorage.__objects = {}
                 else:
                     FileStorage.__objects = json.loads(from_file)
+            # convert dates to datetime
+            for key, instance in FileStorage.__objects.items():
+                format = '%Y-%m-%dT%H:%M:%S.%f'
+                # convert created_at
+                created_at = datetime.strptime(instance["created_at"], format)
+                instance["created_at"] = created_at
+                # convert updated_at
+                updated_at = datetime.strptime(instance["updated_at"], format)
+                instance["updated_at"] = updated_at

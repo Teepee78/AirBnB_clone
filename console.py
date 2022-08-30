@@ -64,16 +64,13 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:  # id is missing
             print("** instance id missing **")
             return
-        # Load json file and populate instances
-        with open(jsonpath, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-            instances = []
-            for line in lines:
-                instances.append(json.loads(line))
+        # Get all instances
+        instances = storage.all()
 
         # Search instances
-        for instance in instances:
-            if instance["id"] == args[1]:
+        for key, instance in instances.items():
+            search = f"{args[0]}.{args[1]}"
+            if search == key:
                 # create instance
                 inst = BaseModel(**instance)
                 print(inst)

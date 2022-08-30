@@ -23,8 +23,10 @@ class BaseModel:
                 if key == "__class__":
                     continue
                 if key == "created_at" or key == "updated_at":
-                    date = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                    setattr(self, key, date)
+                    if type(value) == str:
+                        date = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                        setattr(self, key, date)
+                    setattr(self, key, value)
                 else:
                     setattr(self, key, value)
         elif len(args) != 0:

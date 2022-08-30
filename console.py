@@ -2,6 +2,7 @@
 """Entry point of the command interpreter"""
 import cmd
 import json
+import re
 from models.base_model import BaseModel
 from models import storage
 
@@ -48,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
             return
         instance = BaseModel()
         # save to json file
-        storage.new(instance)
+        # storage.new(instance)
         storage.save()
         print(instance.id)
 
@@ -76,6 +77,63 @@ class HBNBCommand(cmd.Cmd):
                 print(inst)
                 return
         print("** no instance found **")
+
+    def do_destroy(self, argv):
+        """Deletes an instance based on the class name and id"""
+        args = parser(argv)
+        if args is None:
+            return
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        instances = storage.all()
+
+        for key, instance in instances.items():
+            search = f"{args[0]}.{args[1]}"
+            if search == key:
+                # The item is deleted here
+                # It is directly deleted from the instances variable since
+                # dictionaries are passed by reference instances referes to
+                # the original __objects dictionary
+                instances.pop(search)
+                storage.save()
+                return
+        print("** no instance found **")
+
+    def do_all(self, argv):
+        """
+        Prints all string representation of all
+        instances based or not on the class name
+        """
+        inst_str_list = []
+        # Case 1: Argument is not provided
+        if len(argv) == 0:
+            instances = storage.all()
+            for key, instance in instances.items():
+                # Checking and converting new instances to a dictionary
+                if not isinstance(instance, dict):
+                    instance = instance.to_dict()
+                inst = BaseModel(**instance)
+                inst_str_list.append(inst.__str__())
+            print(inst_str_list)
+            return
+        args = argv.split()
+        # Check if classes exists
+        if args[0] not in classes:
+            print("** class doesn't exist **")
+            return
+        # Case 2: Argument is provided
+        inst_str_list = []
+        instances = storage.all()
+        for key, instance in instances.items():
+            # Checks if the key contains the name of the class
+            if re.search(f"{args[0]}{'.'}.*", key):
+                # Checking and converting new instances to a dictionary
+                if not isinstance(instance, dict):
+                    instance = instance.to_dict()
+                inst = BaseModel(**instance)
+                inst_str_list.append(inst.__str__())
+        print(inst_str_list)
 
     def do_quit(self, argv):
         """Quits command interpreter"""

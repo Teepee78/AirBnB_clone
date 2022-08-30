@@ -23,10 +23,13 @@ class BaseModel:
                 if key == "__class__":
                     continue
                 if key == "created_at" or key == "updated_at":
+                    # Check if it's in datetime format
                     if type(value) == str:
+                        # convert to datetime
                         date = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                         setattr(self, key, date)
-                    setattr(self, key, value)
+                    else:  # It's in datetime foromat
+                        setattr(self, key, value)
                 else:
                     setattr(self, key, value)
         elif len(args) != 0:
@@ -40,7 +43,7 @@ class BaseModel:
     def __str__(self):
         """Prints string representation of instance"""
 
-        string = "[BaseModel] ({}) {}".format(self.id, self.__dict__)
+        string = f"[BaseModel] ({self.id}) {self.__dict__}"
         return string
 
     def save(self):

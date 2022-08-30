@@ -4,6 +4,7 @@ This module defines BaseModel class
 """
 from datetime import datetime
 from uuid import uuid4
+from __init__ import storage
 
 
 class BaseModel:
@@ -32,6 +33,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """Prints string representation of instance"""
@@ -42,6 +44,7 @@ class BaseModel:
     def save(self):
         """Updates 'updated_at' with the current datetime"""
 
+        storage.save()
         self.updated_at = datetime.now()
 
     def to_dict(self):

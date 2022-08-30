@@ -18,7 +18,7 @@ class FileStorage:
         __objects: dictionary - empty but will store all objects
     """
     __objects = {}
-    __file_path = ".models/engine/instances.json"
+    __file_path = "./models/engine/instances.json"
 
     def __init__(self):
         pass
@@ -30,17 +30,17 @@ class FileStorage:
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
 
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        key = f"{obj.__class__.__name__}.{obj.id}"
         FileStorage.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
 
         # copy dictionary
-        for key, instance in FileStorage.__objects.items():
-            if not isinstance(instance, dict):
-                FileStorage.__objects[key] = copy.copy(instance).to_dict()
         copiedDict = dict(FileStorage.__objects)
+        for key, instance in copiedDict.items():
+            if not isinstance(instance, dict):
+                copiedDict[key] = copy.copy(instance).to_dict()
         # convert datetime to isoformat
         for key, instance in copiedDict.items():
             if type(instance["created_at"]) is not str:

@@ -18,7 +18,7 @@ class FileStorage:
         __objects: dictionary - empty but will store all objects
     """
     __objects = {}
-    __file_path = "./engine/instances.json"
+    __file_path = ".models/engine/instances.json"
 
     def __init__(self):
         pass

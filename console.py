@@ -5,6 +5,7 @@ import json
 import re
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 
 
 # List of classes
@@ -48,9 +49,9 @@ class HBNBCommand(cmd.Cmd):
         args = parser(argv)
         if args is None:
             return
-        instance = BaseModel()
+        instance = eval(f"{args[0]}()")
         # save to json file
-        # storage.new(instance)
+        storage.new(instance)
         storage.save()
         print(instance.id)
 
@@ -74,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             search = f"{args[0]}.{args[1]}"
             if search == key:
                 # create instance
-                inst = BaseModel(**instance)
+                inst = eval(f"{args[0]}(**instance)")
                 print(inst)
                 return
         print("** no instance found **")
@@ -114,7 +115,8 @@ class HBNBCommand(cmd.Cmd):
                 # Checking and converting new instances to a dictionary
                 if not isinstance(instance, dict):
                     instance = instance.to_dict()
-                inst = BaseModel(**instance)
+                # create instance
+                inst = eval(f"{instance['__class__']}(**instance)")
                 inst_str_list.append(inst.__str__())
             print(inst_str_list)
             return
@@ -132,7 +134,8 @@ class HBNBCommand(cmd.Cmd):
                 # Checking and converting new instances to a dictionary
                 if not isinstance(instance, dict):
                     instance = instance.to_dict()
-                inst = BaseModel(**instance)
+                # create instance
+                inst = eval(f"{args[0]}(**instance)")
                 inst_str_list.append(inst.__str__())
         print(inst_str_list)
 

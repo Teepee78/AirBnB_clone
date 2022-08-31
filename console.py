@@ -33,6 +33,14 @@ def parser(argv):
     if args[0] not in classes:
         print("** class doesn't exist **")
         return
+    # check for quotes in arguments
+    for i in range(len(args)):
+        if args[i].startswith("'") or args[i].startswith('"'):
+            # rejoin current string with next
+            args[i] = f"{args[i]} {args[i + 1]}"
+            # adjust remaining strings positions
+            for j in range(i + 1, len(args) - 1):
+                args[j] = args[j + 1]
     return args
 
 
@@ -165,10 +173,16 @@ class HBNBCommand(cmd.Cmd):
             if re.search(f".*{'.'}{args[1]}$", key):
                 # Removing the quotation marks of attribute
                 # value as it causes errors
-                val = args[3].strip('\"')
+                val = args[3].strip('\"').strip("'")
                 # casting the value to attribute type
-                type_attr = type(args[2])
-                instances[key][args[2]] = type_attr(val)
+                try:
+                    val = int(val)  # cast to integer
+                except ValueError:
+                    try:
+                        val = float(val)
+                    except ValueError:
+                        pass
+                instances[key][args[2]] = val
                 storage.save()
                 return
 

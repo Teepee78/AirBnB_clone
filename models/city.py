@@ -2,6 +2,7 @@
 """
 This module defines the city class
 """
+from models.base_model import BaseModel
 
 
 class City(BaseModel):
@@ -14,8 +15,3 @@ class City(BaseModel):
     """
     state_id = ""  # State.id
     name = ""
-    def __init__(self)
-    """Initializer for State Class"""
-    {
-            pass
-    }

@@ -2,6 +2,7 @@
 """
 This module defines the state class
 """
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
@@ -12,8 +13,3 @@ class State(BaseModel):
         name: string - name of state
     """
     name = ""
-    def __init__(self)
-    """Initializer for State Class"""
-    {
-            pass
-    }

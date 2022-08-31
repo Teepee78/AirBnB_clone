@@ -2,6 +2,7 @@
 """
 This module defines the amenity class
 """
+from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
@@ -13,8 +14,3 @@ class Amenity(BaseModel):
     """
 
     name = ""
-    def __init__(self)
-    """Initializer for Amenity Class"""
-    {
-            pass
-    }

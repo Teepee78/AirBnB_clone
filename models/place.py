@@ -2,6 +2,7 @@
 """
 This module defines the place class
 """
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
@@ -32,8 +33,3 @@ class Place(BaseModel):
     latitude = 0.0
     longtitude = 0.0
     amenity_ids = []
-    def __init__(self)
-    """Initializer for Place Class"""
-    {
-            pass
-    }

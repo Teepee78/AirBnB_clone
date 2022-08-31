@@ -67,6 +67,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         # Get all instances
+        storage.reload()
         instances = storage.all()
 
         # Search instances
@@ -87,6 +88,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
+        storage.reload()
         instances = storage.all()
 
         for key, instance in instances.items():
@@ -109,6 +111,7 @@ class HBNBCommand(cmd.Cmd):
         inst_str_list = []
         # Case 1: Argument is not provided
         if len(argv) == 0:
+            storage.reload()
             instances = storage.all()
             for key, instance in instances.items():
                 # Checking and converting new instances to a dictionary
@@ -126,6 +129,7 @@ class HBNBCommand(cmd.Cmd):
             return
         # Case 2: Argument is provided
         inst_str_list = []
+        storage.reload()
         instances = storage.all()
         for key, instance in instances.items():
             # Checks if the key contains the name of the class
@@ -139,6 +143,10 @@ class HBNBCommand(cmd.Cmd):
         print(inst_str_list)
 
     def do_update(self, argv):
+        """
+        Updates an instance based on the class name
+        and id by adding or updating attribute
+        """
         args = parser(argv)
         if len(args) == 3:  # attribute value is missing
             print("** value missing **")
@@ -149,13 +157,12 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:  # instance id is missing
             print("** instance id missing **")
             return
+        storage.reload()
         instances = storage.all()
         copy_instances = instances.copy()
         for key, instance in copy_instances.items():
             # checks if the key contains the requested id
             if re.search(f".*{'.'}{args[1]}$", key):
-                if not isinstance(instance, dict):
-                    instance = instance.to_dict()
                 # Removing the quotation marks of attribute
                 # value as it causes errors
                 val = args[3].strip('\"')

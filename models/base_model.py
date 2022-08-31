@@ -43,7 +43,7 @@ class BaseModel:
     def __str__(self):
         """Prints string representation of instance"""
 
-        string = f"[BaseModel] ({self.id}) {self.__dict__}"
+        string = f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
         return string
 
     def save(self):

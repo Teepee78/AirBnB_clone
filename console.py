@@ -9,7 +9,8 @@ from models import storage
 
 # List of classes
 classes = [
-    "BaseModel"
+    "BaseModel",
+    "User"
 ]
 
 jsonpath = "models/engine/instances.json"

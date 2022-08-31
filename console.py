@@ -51,7 +51,6 @@ class HBNBCommand(cmd.Cmd):
             return
         instance = eval(f"{args[0]}()")
         # save to json file
-        storage.new(instance)
         storage.save()
         print(instance.id)
 

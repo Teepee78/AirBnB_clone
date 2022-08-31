@@ -55,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, argv):
         """
-        Prints the sting representation of an instance based on the
+        Prints the string representation of an instance based on the
         class name and id
         """
 
@@ -135,8 +135,35 @@ class HBNBCommand(cmd.Cmd):
                 inst_str_list.append(inst.__str__())
         print(inst_str_list)
 
+    def do_update(self, argv):
+        args = parser(argv)
+        if len(args) == 3:  # attribute value is missing
+            print("** value missing **")
+            return
+        if len(args) == 2:  # attribute name is missing
+            print("** attribute name missing **")
+            return
+        if len(args) == 1:  # instance id is missing
+            print("** instance id missing **")
+            return
+        instances = storage.all()
+        copy_instances = instances.copy()
+        for key, instance in copy_instances.items():
+            # checks if the key contains the requested id
+            if re.search(f".*{'.'}{args[1]}$", key):
+                if not isinstance(instance, dict):
+                    instance = instance.to_dict()
+                # Removing the quotation marks of attribute
+                # value as it causes errors
+                val = args[3].strip('\"')
+                # casting the value to attribute type
+                type_attr = type(args[2])
+                instances[key][args[2]] = type_attr(val)
+                storage.save()
+                return
+
     def do_quit(self, argv):
-        """Quits command interpreter"""
+        """Quit command to exit the program"""
 
         return True
 

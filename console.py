@@ -192,6 +192,56 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
+    def all(self, argv):
+        """Handles the all command for the default method"""
+
+        # Parse argument
+        argv.pop(1)
+        args = " ".join(argv)
+        # Call do_all method
+        self.do_all(args)
+
+    def count(self, argv):
+        """Handles the count command for the default method"""
+
+        # Parse argument
+        argv.pop(1)
+        for i in argv:
+            try:
+                argv.remove('')
+            except ValueError:
+                break
+        args = " ".join(argv)
+
+        # count instances
+        inst_str_list = []
+        storage.reload()
+        instances = storage.all()
+        for key, instance in instances.items():
+            # Checks if the key contains the name of the class
+            if args in key:
+                # Append instance to list
+                inst_str_list.append(instance)
+        print(len(inst_str_list))
+
+    def default(self, argv):
+        """Handles commands that doesn't exist"""
+
+        # List of commands
+        commands = ["all", "count"]
+        # Split arguments by dot and parentheses
+        args = re.split(r'[\(\).]', argv)
+        # Check if first argument is in classes
+        if args[0] in classes:
+            # Check for second argument
+            if args[1] in commands:
+                eval_string = f"self.{args[1]}({args})"
+                eval(eval_string)
+            else:
+                print(f"*** Unknown syntax: {'.'.join(args)}")
+        else:  # Print error message
+            print(f"*** Unknown syntax: {'.'.join(args)}")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

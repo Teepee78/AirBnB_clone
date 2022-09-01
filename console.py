@@ -203,10 +203,33 @@ class HBNBCommand(cmd.Cmd):
         """Handles the all command for the default method"""
 
         # Parse argument
-        argv.remove('all')
+        argv.pop(1)
         args = " ".join(argv)
         # Call do_all method
         self.do_all(args)
+
+    def count(self, argv):
+        """Handles the count command for the default method"""
+
+        # Parse argument
+        argv.pop(1)
+        for i in argv:
+            try:
+                argv.remove('')
+            except ValueError:
+                break
+        args = " ".join(argv)
+
+        # count instances
+        inst_str_list = []
+        storage.reload()
+        instances = storage.all()
+        for key, instance in instances.items():
+            # Checks if the key contains the name of the class
+            if args in key:
+                # Append instance to list
+                inst_str_list.append(instance)
+        print(len(inst_str_list))
 
     def default(self, argv):
         """Handles commands that doesn't exist"""

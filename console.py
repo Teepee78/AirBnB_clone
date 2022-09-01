@@ -11,6 +11,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import shlex
 
 
 # List of classes
@@ -38,20 +39,11 @@ def parser(argv):
         print("** class name missing **")
         return
     # Split argv into a list of strings
-    args = argv.split()
+    args = shlex.split(argv, posix=False)
     # Check if class exists
     if args[0] not in classes:
         print("** class doesn't exist **")
         return
-    # check for quotes in arguments
-    for i in range(len(args)):
-        if args[i].startswith("'") or args[i].startswith('"'):
-            if not args[i].endswith("'") and not args[i].endswith('"'):
-                # rejoin current string with next
-                args[i] = f"{args[i]} {args[i + 1]}"
-                # adjust remaining strings positions
-                for j in range(i + 1, len(args) - 1):
-                    args[j] = args[j + 1]
     return args
 
 

@@ -221,6 +221,8 @@ class HBNBCommand(cmd.Cmd):
             if args[1] in commands:
                 eval_string = f"self.{args[1]}({args})"
                 eval(eval_string)
+            else:
+                print(f"*** Unknown syntax: {'.'.join(args)}")
         else:  # Print error message
             print(f"*** Unknown syntax: {'.'.join(args)}")
 

@@ -92,9 +92,7 @@ class HBNBCommand(cmd.Cmd):
         for key, instance in instances.items():
             search = f"{args[0]}.{args[1]}"
             if search == key:
-                # create instance
-                inst = eval(f"{args[0]}(**instance)")
-                print(inst)
+                print(instance)
                 return
         print("** no instance found **")
 
@@ -127,37 +125,30 @@ class HBNBCommand(cmd.Cmd):
         instances based or not on the class name
         """
         inst_str_list = []
+
         # Case 1: Argument is not provided
         if len(argv) == 0:
             storage.reload()
             instances = storage.all()
             for key, instance in instances.items():
-                # Checking and converting new instances to a dictionary
-                if not isinstance(instance, dict):
-                    instance = instance.to_dict()
-                # create instance
-                inst = eval(f"{instance['__class__']}(**instance)")
-                inst_str_list.append(inst.__str__())
+                # append string representation to list
+                inst_str_list.append(instance.__str__())
             print(inst_str_list)
             return
+
         args = argv.split()
         # Check if classes exists
         if args[0] not in classes:
             print("** class doesn't exist **")
             return
         # Case 2: Argument is provided
-        inst_str_list = []
         storage.reload()
         instances = storage.all()
         for key, instance in instances.items():
             # Checks if the key contains the name of the class
             if re.search(f"{args[0]}{'.'}.*", key):
-                # Checking and converting new instances to a dictionary
-                if not isinstance(instance, dict):
-                    instance = instance.to_dict()
-                # create instance
-                inst = eval(f"{args[0]}(**instance)")
-                inst_str_list.append(inst.__str__())
+                # Append instance to list
+                inst_str_list.append(instance.__str__())
         print(inst_str_list)
 
     def do_update(self, argv):
@@ -192,7 +183,8 @@ class HBNBCommand(cmd.Cmd):
                         val = float(val)
                     except ValueError:
                         pass
-                instances[key][args[2]] = val
+                # Update the attribute of the instance
+                setattr(instances[key], args[2], val)
                 storage.save()
                 return
 

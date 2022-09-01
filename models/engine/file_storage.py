@@ -59,6 +59,14 @@ class FileStorage:
     def reload(self):
         """deserializes the JSON file to __objects"""
 
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+
         if exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r', encoding="utf-8") as rFile:
                 from_file = rFile.read()
@@ -66,12 +74,7 @@ class FileStorage:
                     FileStorage.__objects = {}
                 else:
                     FileStorage.__objects = json.loads(from_file)
-            # convert dates to datetime
-            for key, instance in FileStorage.__objects.items():
-                format = '%Y-%m-%dT%H:%M:%S.%f'
-                # convert created_at
-                created_at = datetime.strptime(instance["created_at"], format)
-                instance["created_at"] = created_at
-                # convert updated_at
-                updated_at = datetime.strptime(instance["updated_at"], format)
-                instance["updated_at"] = updated_at
+                    # load instances
+                    for key, instance in FileStorage.__objects.items():
+                        eval_string = f"{instance['__class__']}(**instance)"
+                        FileStorage.__objects[key] = eval(eval_string)

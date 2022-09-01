@@ -46,11 +46,12 @@ def parser(argv):
     # check for quotes in arguments
     for i in range(len(args)):
         if args[i].startswith("'") or args[i].startswith('"'):
-            # rejoin current string with next
-            args[i] = f"{args[i]} {args[i + 1]}"
-            # adjust remaining strings positions
-            for j in range(i + 1, len(args) - 1):
-                args[j] = args[j + 1]
+            if not args[i].endswith("'") and not args[i].endswith('"'):
+                # rejoin current string with next
+                args[i] = f"{args[i]} {args[i + 1]}"
+                # adjust remaining strings positions
+                for j in range(i + 1, len(args) - 1):
+                    args[j] = args[j + 1]
     return args
 
 

@@ -47,7 +47,7 @@ def parser(argv):
     return args
 
 
-def remove_empty_strings(argv):
+def parse_default(argv):
     """Removes empty strings from arguments
     removes function name
 
@@ -217,7 +217,7 @@ class HBNBCommand(cmd.Cmd):
         """Handles the all command for the default method"""
 
         # Parse argument
-        args = remove_empty_strings(argv)
+        args = parse_default(argv)
         # Call do_all method
         self.do_all(args)
 
@@ -225,7 +225,7 @@ class HBNBCommand(cmd.Cmd):
         """Handles the count command for the default method"""
 
         # Parse argument
-        args = remove_empty_strings(argv)
+        args = parse_default(argv)
 
         # count instances
         inst_str_list = []
@@ -241,7 +241,7 @@ class HBNBCommand(cmd.Cmd):
     def show(self, argv):
         """Handles the show command for the default method"""
         # Parse argument
-        args = remove_empty_strings(argv)
+        args = parse_default(argv)
         # call show method
         self.do_show(args)
 
@@ -249,15 +249,26 @@ class HBNBCommand(cmd.Cmd):
         """Handles the destroy command for the default method"""
 
         # Parse argument
-        args = remove_empty_strings(argv)
+        args = parse_default(argv)
         # call destroy method
         self.do_destroy(args)
+
+    def update(self, argv):
+        """Handles the update command for the default method"""
+
+        # Parse argument
+        args = parse_default(argv)
+        # remove comma
+        args = args.replace(',', '')
+        print(args)
+        # call update method
+        self.do_update(args)
 
     def default(self, argv):
         """Handles commands that doesn't exist"""
 
         # List of commands
-        commands = ["all", "count", "show", "destroy"]
+        commands = ["all", "count", "show", "destroy", "update"]
         # Split arguments by dot and parentheses
         args = re.split(r'[\(\).]', argv)
         # Check if first argument is in classes

@@ -245,11 +245,19 @@ class HBNBCommand(cmd.Cmd):
         # call show method
         self.do_show(args)
 
+    def destroy(self, argv):
+        """Handles the destroy command for the default method"""
+
+        # Parse argument
+        args = remove_empty_strings(argv)
+        # call destroy method
+        self.do_destroy(args)
+
     def default(self, argv):
         """Handles commands that doesn't exist"""
 
         # List of commands
-        commands = ["all", "count", "show"]
+        commands = ["all", "count", "show", "destroy"]
         # Split arguments by dot and parentheses
         args = re.split(r'[\(\).]', argv)
         # Check if first argument is in classes

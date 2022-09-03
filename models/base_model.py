@@ -26,7 +26,8 @@ class BaseModel:
                     # Check if it's in datetime format
                     if type(value) == str:
                         # convert to datetime
-                        date = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                        format = '%Y-%m-%dT%H:%M:%S.%f'
+                        date = datetime.datetime.strptime(value, format)
                         setattr(self, key, date)
                     else:  # It's in datetime foromat
                         setattr(self, key, value)

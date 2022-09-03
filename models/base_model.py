@@ -2,8 +2,8 @@
 """
 This module defines BaseModel class
 """
-from datetime import datetime
-from uuid import uuid4
+import datetime
+import uuid
 from models import storage
 
 
@@ -26,7 +26,7 @@ class BaseModel:
                     # Check if it's in datetime format
                     if type(value) == str:
                         # convert to datetime
-                        date = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                        date = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                         setattr(self, key, date)
                     else:  # It's in datetime foromat
                         setattr(self, key, value)
@@ -35,9 +35,9 @@ class BaseModel:
         elif len(args) != 0:
             raise TypeError("Too many arguments")
         else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
             storage.new(self)
 
     def __str__(self):
@@ -49,7 +49,7 @@ class BaseModel:
     def save(self):
         """Updates 'updated_at' with the current datetime"""
 
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.datetime.now()
         storage.save()
 
     def to_dict(self):

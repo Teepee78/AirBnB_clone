@@ -84,13 +84,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(self.inst.__str__(), "[BaseModel] ({}) {}"
                          .format(self.inst.id, self.inst.__dict__))
 
-    # def test_init_args(self):
-    #     """Test initialization with parameters"""
-    #
-    #     with self.assertRaises(TypeError):
-    #         inst = BaseModel(1)
-    #     with self.assertRaises(TypeError):
-    #         inst = BaseModel(1, 2)
+    def test_init_args(self):
+        """Test initialization with parameters"""
+
+        with self.assertRaises(TypeError):
+            inst = BaseModel(1)
+        with self.assertRaises(TypeError):
+            inst = BaseModel(1, 2)
 
     def test_save(self):
         """Test save method"""

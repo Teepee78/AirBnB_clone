@@ -177,6 +177,8 @@ class HBNBCommand(cmd.Cmd):
         and id by adding or updating attribute
         """
         args = parser(argv)
+        if args is None:
+            return
         if len(args) == 3:  # attribute value is missing
             print("** value missing **")
             return

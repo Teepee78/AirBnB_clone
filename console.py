@@ -285,6 +285,17 @@ class HBNBCommand(cmd.Cmd):
                                  argv_copy[2]).group(0)
             found_dict = found_dict.replace("'", '"')
             actual_dict = json.loads(found_dict)
+            # checking if the id exists
+            insts = storage.all()
+            found = 0
+            for key, value in insts.items():
+                if re.search(f".*{'.'}{found_id}$", key):
+                    found = 1
+
+            if found == 0:
+                print("** no instance found **")
+                return
+
             for key, value in actual_dict.items():
                 new_argv = []
                 new_argv.append(argv_copy[0])

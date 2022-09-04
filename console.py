@@ -304,6 +304,9 @@ class HBNBCommand(cmd.Cmd):
                 new_argv.append(key)
                 new_argv.append(str(f'"{value}"'))
                 args = parse_default(new_argv)
+                copy_args = args
+                if parser(copy_args) is None:
+                    return
                 self.do_update(args)
         else:
             # Not a dictionary

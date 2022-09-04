@@ -9,7 +9,7 @@ class User(BaseModel):
     """
     Defines attributes for user
 
-    Attrs:
+    Args:
         email: string - email of user
         password: string - password of user
         first_name: string - first_name of user

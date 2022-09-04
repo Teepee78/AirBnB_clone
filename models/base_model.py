@@ -4,7 +4,7 @@ This module defines BaseModel class
 """
 import datetime
 import uuid
-# from models import storage
+from models import storage
 
 
 class BaseModel:
@@ -18,7 +18,6 @@ class BaseModel:
     """
 
     def __init__(self, *args, **kwargs):
-        from models import storage
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key == "__class__":
@@ -51,7 +50,6 @@ class BaseModel:
     def save(self):
         """Updates 'updated_at' with the current datetime"""
 
-        from models import storage
         self.updated_at = datetime.datetime.now()
         storage.save()
 

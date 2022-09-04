@@ -24,11 +24,18 @@ class FileStorage:
         pass
 
     def all(self):
-        """returns the dictionary __objects"""
+        """returns the dictionary __objects
+
+        Returns:
+            a dictionary of objects
+        """
         return FileStorage.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id
+
+        Args:
+            obj: object to be stored"""
 
         key = f"{obj.__class__.__name__}.{obj.id}"
         FileStorage.__objects[key] = obj

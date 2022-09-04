@@ -202,6 +202,13 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
                 return
 
+    def emptyline(self):
+        """Called when an empty line is entered"""
+        # This function is overriden so that the
+        # last command is not executed when an
+        # empty line is entered
+        pass
+
     def do_quit(self, argv):
         """Quit command to exit the program"""
 

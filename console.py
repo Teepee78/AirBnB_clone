@@ -214,6 +214,7 @@ class HBNBCommand(cmd.Cmd):
                 setattr(instances[key], args[2], val)
                 storage.save()
                 return
+        print("** no instance found **")
 
     def emptyline(self):
         """Called when an empty line is entered"""

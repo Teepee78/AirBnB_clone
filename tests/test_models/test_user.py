@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module contains unittests for BaseModel class
+This module contains unittests for UserModel class
 """
 from models.user import User
 import unittest

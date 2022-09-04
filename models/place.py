@@ -3,6 +3,9 @@
 This module defines the place class
 """
 from models.base_model import BaseModel
+from models.city import City
+from models.user import User
+from models.amenity import Amenity
 
 
 class Place(BaseModel):
@@ -22,8 +25,8 @@ class Place(BaseModel):
         longitude: float - longitude of place
         amenity_ids: list - list of amenity ids
     """
-    city_id = ""   # City.id
-    user_id = ""   # User.id
+    city_id = ""
+    user_id = ""
     name = ""
     description = ""
     number_rooms = 0

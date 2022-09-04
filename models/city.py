@@ -3,7 +3,7 @@
 This module defines the city class
 """
 from models.base_model import BaseModel
-
+from models.state import State
 
 class City(BaseModel):
     """
@@ -13,5 +13,5 @@ class City(BaseModel):
         state_id: string - id of state
         name: string - name of state
     """
-    state_id = ""  # State.id
+    state_id = ""
     name = ""

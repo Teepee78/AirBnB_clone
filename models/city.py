@@ -5,6 +5,7 @@ This module defines the city class
 from models.base_model import BaseModel
 from models.state import State
 
+
 class City(BaseModel):
     """
     Defines all attributes related to the City class

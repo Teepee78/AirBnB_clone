@@ -255,14 +255,32 @@ class HBNBCommand(cmd.Cmd):
 
     def update(self, argv):
         """Handles the update command for the default method"""
-
-        # Parse argument
-        args = parse_default(argv)
-        # remove comma
-        args = args.replace(',', '')
-        print(args)
-        # call update method
-        self.do_update(args)
+        argv_copy = argv.copy()
+        if re.search(r"{.*}", argv_copy[2]):
+            # Dictionary
+            new_argv = []
+            found_dict = re.search(r"{.*}", argv_copy[2]).group(0)
+            found_id = re.search(".{8}-.{4}-.{4}-.{4}-.{12}",
+                                 argv_copy[2]).group(0)
+            found_dict = found_dict.replace("'", '"')
+            actual_dict = json.loads(found_dict)
+            for key, value in actual_dict.items():
+                new_argv = []
+                new_argv.append(argv_copy[0])
+                new_argv.append(argv_copy[1])
+                new_argv.append(found_id)
+                new_argv.append(key)
+                new_argv.append(str(f'"{value}"'))
+                args = parse_default(new_argv)
+                self.do_update(args)
+        else:
+            # Not a dictionary
+            # Parse argument
+            args = parse_default(argv)
+            # remove comma
+            args = args.replace(',', '')
+            # call update method
+            self.do_update(args)
 
     def default(self, argv):
         """Handles commands that doesn't exist"""

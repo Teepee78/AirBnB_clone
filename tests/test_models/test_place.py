@@ -26,5 +26,5 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(inst.max_guest, 0)
         self.assertEqual(inst.price_by_night, 0)
         self.assertEqual(inst.latitude, 0.0)
-        self.assertEqual(inst.longtitude, 0.0)
+        self.assertEqual(inst.longitude, 0.0)
         self.assertEqual(inst.amenity_ids[0], "Bole")

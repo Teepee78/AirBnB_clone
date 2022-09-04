@@ -101,10 +101,13 @@ class HBNBCommand(cmd.Cmd):
         # Get all instances
         storage.reload()
         instances = storage.all()
-
+        try:
+            id_only = args[1].strip('\"').strip("'")
+        except ValueError:
+            pass
         # Search instances
         for key, instance in instances.items():
-            search = f"{args[0]}.{args[1]}"
+            search = f"{args[0]}.{id_only}"
             if search == key:
                 print(instance)
                 return
@@ -120,9 +123,12 @@ class HBNBCommand(cmd.Cmd):
             return
         storage.reload()
         instances = storage.all()
-
+        try:
+            id_only = args[1].strip('\"').strip("'")
+        except ValueError:
+            pass
         for key, instance in instances.items():
-            search = f"{args[0]}.{args[1]}"
+            search = f"{args[0]}.{id_only}"
             if search == key:
                 # The item is deleted here
                 # It is directly deleted from the instances variable since
@@ -184,8 +190,13 @@ class HBNBCommand(cmd.Cmd):
         instances = storage.all()
         copy_instances = instances.copy()
         for key, instance in copy_instances.items():
+            # Removing qoutation mark from id if present
+            try:
+                id_only = args[1].strip('\"').strip("'")
+            except ValueError:
+                pass
             # checks if the key contains the requested id
-            if re.search(f".*{'.'}{args[1]}$", key):
+            if re.search(f".*{'.'}{id_only}$", key):
                 # Removing the quotation marks of attribute
                 # value as it causes errors
                 val = args[3].strip('\"').strip("'")

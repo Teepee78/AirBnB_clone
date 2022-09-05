@@ -6,7 +6,7 @@ from models.user import User
 import unittest
 
 
-class TestUserModel(unittest.TestCase):
+class TestUser(unittest.TestCase):
     """Defines test cases for UserModel class"""
 
     def test_init(self):

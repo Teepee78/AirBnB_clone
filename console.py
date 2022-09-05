@@ -281,8 +281,12 @@ class HBNBCommand(cmd.Cmd):
             # Dictionary
             new_argv = []
             found_dict = re.search(r"{.*}", argv_copy[2]).group(0)
-            found_id = re.search(".{8}-.{4}-.{4}-.{4}-.{12}",
-                                 argv_copy[2]).group(0)
+            try:
+                found_id = re.search(".{8}-.{4}-.{4}-.{4}-.{12}",
+                                     argv_copy[2]).group(0)
+            except AttributeError:
+                print("** no instance found **")
+                return
             found_dict = found_dict.replace("'", '"')
             actual_dict = json.loads(found_dict)
             # checking if the id exists

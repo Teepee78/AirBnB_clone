@@ -11,12 +11,11 @@ class TestUserModel(unittest.TestCase):
 
     def test_init(self):
         """Test Initialization"""
-        inst = User()
-        inst.email = "abc@gmail.com"
-        inst.password = "pass"
-        inst.first_name = "abebe"
-        inst.last_name = "henok"
-        self.assertEqual(inst.email, "abc@gmail.com")
-        self.assertEqual(inst.password, "pass")
-        self.assertEqual(inst.first_name, "abebe")
-        self.assertEqual(inst.last_name, "henok")
+        User.email = "abc@gmail.com"
+        User.password = "pass"
+        User.first_name = "abebe"
+        User.last_name = "henok"
+        self.assertEqual(User.email, "abc@gmail.com")
+        self.assertEqual(User.password, "pass")
+        self.assertEqual(User.first_name, "abebe")
+        self.assertEqual(User.last_name, "henok")

@@ -76,6 +76,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Creates a new instance of a class,
         saves it to JSON file and prints ID
+
+        Usage: create <class name>
         """
 
         args = parser(argv)
@@ -90,6 +92,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints the string representation of an instance based on the
         class name and id
+
+        Usage: show <class name> <id>
         """
 
         args = parser(argv)
@@ -114,7 +118,10 @@ class HBNBCommand(cmd.Cmd):
         print("** no instance found **")
 
     def do_destroy(self, argv):
-        """Deletes an instance based on the class name and id"""
+        """Deletes an instance based on the class name and id
+
+        Usage: destroy <class name> <id>
+        """
         args = parser(argv)
         if args is None:
             return
@@ -143,6 +150,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints all string representation of all
         instances based or not on the class name
+
+        Usage: all or all <class name>
         """
         inst_str_list = []
 
@@ -175,6 +184,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Updates an instance based on the class name
         and id by adding or updating attribute
+
+        Usage: update <class name> <id> <attribute> <value>
         """
         args = parser(argv)
         if args is None:
